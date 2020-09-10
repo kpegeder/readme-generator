@@ -34,8 +34,35 @@ const questions = [
   },
   {
     type: "input",
-    message: "What is the table of content?",
-    name: "content"
+    message: "What is your name?",
+    name: "name",
+    validate: function validateName(name) {
+      console.log("\nPlease enter your name to continue");
+      return name !== "";
+    }
+  },
+  {
+    type: "input",
+    message: "What is your GitHub username?",
+    name: "username"
+  },
+  {
+    type: "list",
+    message: "Did you collaborate with anyone?",
+    name: "numberPeople",
+    choices: ["0", "1", "2", "3", "4", "5"]
+  },
+  {
+    type: "input",
+    message:
+      "If you collaborated with anyone, please create a list with a comma to separate collaborators.",
+    name: "collaborate"
+  },
+  {
+    type: "input",
+    message:
+      "Put the demo picture or video file in an assest/images folder, what is the file name and extension? (ex demo.jpg)",
+    name: "demo"
   }
 ];
 
