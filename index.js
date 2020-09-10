@@ -6,24 +6,36 @@ const generateMarkdown = require("./generateMarkdown");
 const questions = [
   {
     type: "input",
-    message: "What is the title of the README?",
+    message: "What is the project's name?",
     name: "title"
   },
   {
     type: "input",
-    message: "What is the description of the app?",
+    message: "Please write a description about your project",
     name: "description"
+  },
+  {
+    type: "input",
+    message: "What command should be run to install dependencies?",
+    name: "install",
+    default: "npm i"
+  },
+  {
+    type: "list",
+    message: "What type of license to use?",
+    name: "license",
+    choices: ["MIT", "APACHE 2.0", "GPL 3.0", "BSD 3", "None"]
+  },
+  {
+    type: "input",
+    message: "What command should be used to run tests?",
+    name: "test",
+    default: "npm test"
   },
   {
     type: "input",
     message: "What is the table of content?",
     name: "content"
-  },
-  {
-    type: "checkbox",
-    message: "What type of license to use?",
-    name: "license",
-    choices: ["MIT", "Public Domain", "LGPL", "GPL"]
   }
 ];
 
