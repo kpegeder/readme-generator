@@ -47,39 +47,51 @@ const questions = [
     name: "username"
   },
   {
-    type: "list",
+    type: "confirm",
     message: "Did you collaborate with anyone?",
-    name: "numberPeople",
-    choices: ["0", "1", "2", "3", "4", "5"]
-  },
-  {
-    type: "input",
-    message:
-      "If you collaborated with anyone, please create a list with a comma to separate collaborators.",
     name: "collaborate"
   },
   {
     type: "input",
     message:
-      "Put the demo picture or video file in an assest/images folder, what is the file name and extension? (ex demo.jpg)",
+      "Put the demo picture or video file in an assest/images folder,\n  what is the file name and extension? (ex demo.jpg)",
     name: "demo"
   }
 ];
 
-function promptUser() {
-  return inquirer.prompt(questions);
-}
+const collaborateQuestion = [
+  {
+    type: "input",
+    message: "Name of collaborate",
+    name: "collaborateName"
+  },
+  {
+    type: "input",
+    message: "GitHub username",
+    name: "collabUsername"
+  },
+  {
+    type: "confirm",
+    message: "Do you want to add another collaborator?",
+    name: "collabConfirm"
+  }
+];
 
-// function to write README file
-function writeToFile(fileName, data) {
-  // const write = generateMarkdown(data);
-  console.log(filename, data);
-  return fs.writeFile(filename, JSON.stringify(data, null, "\t"), (err) => {
-    if (err) {
-      return console.log(err);
-    }
-    console.log("Success!");
-  });
+// Adding collaborators if any
+async function promptUser() {
+  const arrayAnswers = [];
+  let answers = await inquirer.prompt(questions);
+  let check = answers.collaborate;
+
+  while (check) {
+    let collabAns = await inquirer.prompt(collaborateQuestion);
+    check = collabAns.collabConfirm;
+    arrayAnswers.push(collabAns);
+  }
+  answers.collaborators = arrayAnswers;
+  console.log(typeof answers.license);
+
+  return answers;
 }
 
 // function to initialize program
@@ -93,6 +105,7 @@ async function init() {
       if (err) {
         return console.log(err);
       }
+      console.log("Success!");
     });
   } catch (err) {
     console.log(err);
