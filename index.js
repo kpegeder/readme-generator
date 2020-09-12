@@ -2,23 +2,53 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const generateMarkdown = require("./generateMarkdown");
 
+function verifyInput(name) {
+  return name !== "";
+}
+
 // array of questions for user
 const questions = [
   {
     type: "input",
+    message: "What is your name?",
+    name: "name",
+    validate: verifyInput
+  },
+  {
+    type: "input",
+    message: "What is your email?",
+    name: "email",
+    validate: verifyInput
+  },
+  {
+    type: "input",
+    message: "What is your GitHub username?",
+    name: "username",
+    validate: verifyInput
+  },
+  {
+    type: "input",
     message: "What is the project's name?",
-    name: "title"
+    name: "title",
+    validate: verifyInput
   },
   {
     type: "input",
     message: "Please write a description about your project",
-    name: "description"
+    name: "description",
+    validate: verifyInput
   },
   {
     type: "input",
     message: "What command should be run to install dependencies?",
     name: "install",
     default: "npm i"
+  },
+  {
+    type: "input",
+    message:
+      "Put the demo picture or video file in an assest/images folder,\n  what is the file name and extension? (ex demo.jpg)",
+    name: "demo"
   },
   {
     type: "list",
@@ -33,29 +63,10 @@ const questions = [
     default: "npm test"
   },
   {
-    type: "input",
-    message: "What is your name?",
-    name: "name",
-    validate: function validateName(name) {
-      console.log("\nPlease enter your name to continue");
-      return name !== "";
-    }
-  },
-  {
-    type: "input",
-    message: "What is your GitHub username?",
-    name: "username"
-  },
-  {
     type: "confirm",
     message: "Did you collaborate with anyone?",
-    name: "collaborate"
-  },
-  {
-    type: "input",
-    message:
-      "Put the demo picture or video file in an assest/images folder,\n  what is the file name and extension? (ex demo.jpg)",
-    name: "demo"
+    name: "collaborate",
+    default: false
   }
 ];
 
@@ -63,12 +74,14 @@ const collaborateQuestion = [
   {
     type: "input",
     message: "Name of collaborate",
-    name: "collaborateName"
+    name: "collabName",
+    validate: verifyInput
   },
   {
     type: "input",
     message: "GitHub username",
-    name: "collabUsername"
+    name: "collabUsername",
+    validate: verifyInput
   },
   {
     type: "confirm",
@@ -88,8 +101,8 @@ async function promptUser() {
     check = collabAns.collabConfirm;
     arrayAnswers.push(collabAns);
   }
+
   answers.collaborators = arrayAnswers;
-  console.log(typeof answers.license);
 
   return answers;
 }
