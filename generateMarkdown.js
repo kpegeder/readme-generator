@@ -2,6 +2,7 @@
 function generateMarkdown(data) {
   let collaborate = "";
   let credit = "";
+  let credits = "";
   let arrayPerson = "";
   let license = data.license.replace(" ", "%20");
   let install = "```\n" + data.install + "\n```\n";
@@ -14,6 +15,7 @@ function generateMarkdown(data) {
       arrayPerson += person;
     }
     credit = "## Credit";
+    credits = "* [Credits](#credit)\n";
     collaborate = `List of Collabarators\n`;
     collaborate = "".concat(collaborate, arrayPerson);
   }
@@ -27,7 +29,7 @@ ${data.description}
 * [Installation](#installation)
 * [Usage](#usage)
 * [Test](#test)
-* [Credits](#credit)
+${credits}
 * [License](#license)
 * [Questions](#questions)
 ## Installation
