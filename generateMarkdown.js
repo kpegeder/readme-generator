@@ -1,33 +1,21 @@
 // function to generate markdown for README
 function generateMarkdown(data) {
-  let collaborate;
+  let collaborate = "";
+  let credit = "";
+  let arrayPerson = "";
   let license = data.license.replace(" ", "%20");
-  console.log(license);
-
   let install = "```\n" + data.install + "\n```\n";
   let test = "```\n" + data.test + "\n```\n";
-  // let list = data.collaborate.split(",");
 
   // Write a function to add collaborators
-  switch (data.numberPeople) {
-    case "0":
-      collaborate = "Worked on the project alone";
-      break;
-    case "1":
-      collaborate = `List of Collabarators\n* ${list[0].trim()}`;
-      break;
-    case "2":
-      collaborate = `List of Collabarators\n* ${list[0].trim()}\n* ${list[1].trim()}`;
-      break;
-    case "3":
-      collaborate = `List of Collabarators\n* ${list[0].trim()}\n* ${list[1].trim()}\n* ${list[2].trim()}`;
-      break;
-    case "4":
-      collaborate = `List of Collabarators\n* ${list[0].trim()}\n* ${list[1].trim()}\n* ${list[2].trim()}\n* ${list[3].trim()}`;
-      break;
-    case "5":
-      collaborate = `List of Collabarators\n* ${list[0].trim()}\n* ${list[1].trim()}\n* ${list[2].trim()}\n* ${list[3].trim()}n* ${list[4].trim()}`;
-      break;
+  if (data.collaborate) {
+    for (let i = 0; i < data.collaborators.length; i++) {
+      let person = `* [${data.collaborators[i].collabName}](https://github.com/${data.collaborators[i].collabUsername})\n`;
+      arrayPerson += person;
+    }
+    credit = "## Credit";
+    collaborate = `List of Collabarators\n`;
+    collaborate = "".concat(collaborate, arrayPerson);
   }
 
   return `
@@ -39,8 +27,9 @@ ${data.description}
 * [Installation](#installation)
 * [Usage](#usage)
 * [Test](#test)
-* [Credits](#credits)
+* [Credits](#credit)
 * [License](#license)
+* [Questions](#questions)
 ## Installation
 To install necessary dependencies, run the following command:
 ${install}
@@ -50,12 +39,15 @@ Instructions to use the program are shown below
 ## Test
 To run tests, run the following command:
 ${test}
-## Credit
+${credit}
 ${collaborate}
 ## Contributing
 [${data.name}](https://github.com/${data.username})
 ## License
 Licensed under the ${license} license.
+## Questions
+If you have any additional questions about the applictaion, you can contact through [email](mailto:${data.email}). 
+You can see more of my work on [GitHub](https://github.com/${data.username})
 `;
 }
 
