@@ -45,10 +45,10 @@ const questions = [
     default: "npm i"
   },
   {
-    type: "input",
-    message:
-      "Put the demo picture or video file in an assest/images folder,\n  what is the file name and extension? (ex demo.jpg)",
-    name: "demo"
+    type: "list",
+    message: "How do you want to explain usage?",
+    name: "demo",
+    choices: ["list", "picture/video", "both"]
   },
   {
     type: "list",
@@ -70,6 +70,33 @@ const questions = [
   }
 ];
 
+const listQuestion = [
+  {
+    type: "input",
+    message: "What is the step?",
+    name: "step",
+    validate: verifyInput
+  },
+  {
+    type: "confirm",
+    message: "Do you want to add another step?",
+    name: "listConfirm"
+  }
+];
+
+const fileQuestion = [
+  {
+    type: "input",
+    message: "What is the picure/video file name and type? (ex demo.png)",
+    name: "file"
+  },
+  {
+    type: "confirm",
+    message: "Do you want to add another file?",
+    name: "fileConfirm"
+  }
+];
+
 const collaborateQuestion = [
   {
     type: "input",
@@ -86,34 +113,76 @@ const collaborateQuestion = [
   {
     type: "confirm",
     message: "Do you want to add another collaborator?",
-    name: "collabConfirm"
+    name: "collabConfirm",
+    default: false
   }
 ];
 
 // Adding collaborators if any
 async function promptUser() {
-  const arrayAnswers = [];
+  const arrayAnsCollab = [];
+  const arrayFile = [];
+  const arrayList = [];
+
   let answers = await inquirer.prompt(questions);
   let check = answers.collaborate;
 
   while (check) {
     let collabAns = await inquirer.prompt(collaborateQuestion);
     check = collabAns.collabConfirm;
-    arrayAnswers.push(collabAns);
+    arrayAnsCollab.push(collabAns);
   }
 
-  answers.collaborators = arrayAnswers;
+  switch (answers.demo) {
+    case "list":
+      let confirm = true;
+      while (confirm) {
+        let listAns = await inquirer.prompt(listQuestion);
+        confirm = listAns.listConfirm;
+        arrayList.push(listAns);
+      }
+      break;
+    case "picture/video":
+      let verify = true;
+      while (verify) {
+        let fileAns = await inquirer.prompt(fileQuestion);
+        verify = fileAns.fileConfirm;
+        arrayFile.push(fileAns);
+      }
+      break;
+    case "both":
+      let confirmList = true;
+      while (confirmList) {
+        let listAns = await inquirer.prompt(listQuestion);
+        confirmList = listAns.confirmList;
+        arrayList.push(listAns);
+      }
 
+      let verifyFile = true;
+      while (verifyFile) {
+        let fileAns = await inquirer.prompt(fileQuestion);
+        verifyFile = fileAns.verifyFile;
+        arrayFile.push(fileAns);
+      }
+      break;
+  }
+
+  answers.collaborators = arrayAnsCollab;
+  answers.usageList = arrayList;
+  answers.fileList = arrayFile;
+  console.log(answers);
   return answers;
 }
 
 // function to initialize program
 async function init() {
   try {
+    console.log("All questions require an answer.");
+
     const answers = await promptUser();
 
     const write = generateMarkdown(answers);
-
+    console.log(answers);
     await fs.writeFile("README.md", write, (err) => {
       if (err) {
         return console.log(err);
