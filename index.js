@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const generateMarkdown = require("./generateMarkdown");
 
+// Make sure a response is made
 function verifyInput(name) {
   return name !== "";
 }
@@ -120,11 +121,15 @@ const collaborateQuestion = [
 
 // Adding collaborators if any
 async function promptUser() {
+  // Create array for possible answers
   const arrayAnsCollab = [];
   const arrayFile = [];
   const arrayList = [];
 
+  // Get answers from the questions
   let answers = await inquirer.prompt(questions);
+
+  // See if you worked with anyone
   let check = answers.collaborate;
 
   while (check) {
@@ -133,6 +138,7 @@ async function promptUser() {
     arrayAnsCollab.push(collabAns);
   }
 
+  // Based on the demo question switch between cases
   switch (answers.demo) {
     case "list":
       let confirm = true;
@@ -152,21 +158,23 @@ async function promptUser() {
       break;
     case "both":
       let confirmList = true;
+      let verifyFile = true;
+
       while (confirmList) {
         let listAns = await inquirer.prompt(listQuestion);
-        confirmList = listAns.confirmList;
+        confirmList = listAns.listConfirm;
         arrayList.push(listAns);
       }
 
-      let verifyFile = true;
       while (verifyFile) {
         let fileAns = await inquirer.prompt(fileQuestion);
-        verifyFile = fileAns.verifyFile;
+        verifyFile = fileAns.fileConfirm;
         arrayFile.push(fileAns);
       }
       break;
   }
 
+  // Add array to answer object
   answers.collaborators = arrayAnsCollab;
   answers.usageList = arrayList;
   answers.fileList = arrayFile;
@@ -182,7 +190,7 @@ async function init() {
     const answers = await promptUser();
 
     const write = generateMarkdown(answers);
-    console.log(answers);
+
     await fs.writeFile("README.md", write, (err) => {
       if (err) {
         return console.log(err);
