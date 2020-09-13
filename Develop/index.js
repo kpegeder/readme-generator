@@ -178,7 +178,6 @@ async function promptUser() {
   answers.collaborators = arrayAnsCollab;
   answers.usageList = arrayList;
   answers.fileList = arrayFile;
-  console.log(answers);
   return answers;
 }
 
@@ -191,7 +190,9 @@ async function init() {
 
     const write = generateMarkdown(answers);
 
-    const path = "../README.md";
+    const title = answers.title.split(" ").join("");
+
+    const path = `../${title}.md`;
 
     await fs.writeFile(path, write, (err) => {
       if (err) {
