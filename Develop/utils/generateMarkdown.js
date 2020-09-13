@@ -46,7 +46,7 @@ function generateMarkdown(data) {
       list += listUsage;
     }
     for (let i = 0; i < data.fileList.length; i++) {
-      let fileUsage = `![Demo](./assets/images/${data.fileList[i].file})\n`;
+      let fileUsage = `![Demo](./Develop/assets/images/${data.fileList[i].file})\n`;
       file += fileUsage;
     }
   }
@@ -80,7 +80,7 @@ ${collaborate}
 Licensed under the ${license} license.
 ## Questions
 If you have any additional questions about the applictaion, you can contact through [email](mailto:${data.email}). 
-You can see more of my work on [GitHub](https://github.com/${data.username})
+You can see more of my work on [GitHub](https://github.com/${data.username}).
 `;
 }
 
