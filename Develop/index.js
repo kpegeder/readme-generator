@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const generateMarkdown = require("./generateMarkdown");
+const generateMarkdown = require("./utils/generateMarkdown");
 
 // Make sure a response is made
 function verifyInput(name) {
@@ -191,7 +191,9 @@ async function init() {
 
     const write = generateMarkdown(answers);
 
-    await fs.writeFile("README.md", write, (err) => {
+    const path = "../README.md";
+
+    await fs.writeFile(path, write, (err) => {
       if (err) {
         return console.log(err);
       }
