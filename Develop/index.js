@@ -190,9 +190,7 @@ async function init() {
 
     const write = generateMarkdown(answers);
 
-    const title = answers.title.split(" ").join("");
-
-    const path = `../${title}.md`;
+    const path = `../README.md`;
 
     await fs.writeFile(path, write, (err) => {
       if (err) {
