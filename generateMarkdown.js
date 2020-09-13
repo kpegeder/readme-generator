@@ -1,9 +1,14 @@
 // function to generate markdown for README
 function generateMarkdown(data) {
+  // Create blank strings
   let collaborate = "";
   let credit = "";
   let credits = "";
   let arrayPerson = "";
+  let list = "";
+  let file = "";
+
+  // Edit data input to work with the string
   let license = data.license.replace(" ", "%20");
   let install = "```\n" + data.install + "\n```\n";
   let test = "```\n" + data.test + "\n```\n";
@@ -18,6 +23,32 @@ function generateMarkdown(data) {
     credits = "* [Credits](#credit)\n";
     collaborate = `List of Collabarators\n`;
     collaborate = "".concat(collaborate, arrayPerson);
+  }
+
+  // Add the type of files to the Usage
+  if (data.demo === "list") {
+    for (let i = 0; i < data.usageList.length; i++) {
+      let listUsage = `${[i + 1]}. ${data.usageList[i].step}\n`;
+      list += listUsage;
+    }
+  }
+
+  if (data.demo === "picture/video") {
+    for (let i = 0; i < data.fileList.length; i++) {
+      let fileUsage = `![Demo](./assets/images/${data.fileList[i].file})\n`;
+      file += fileUsage;
+    }
+  }
+
+  if (data.demo === "both") {
+    for (let i = 0; i < data.usageList.length; i++) {
+      let listUsage = `${[i + 1]}. ${data.usageList[i].step}\n`;
+      list += listUsage;
+    }
+    for (let i = 0; i < data.fileList.length; i++) {
+      let fileUsage = `![Demo](./assets/images/${data.fileList[i].file})\n`;
+      file += fileUsage;
+    }
   }
 
   return `
@@ -37,7 +68,8 @@ To install necessary dependencies, run the following command:
 ${install}
 ## Usage
 Instructions to use the program are shown below
-![Demo](./assets/images/${data.demo})
+${list}
+${file}
 ## Test
 To run tests, run the following command:
 ${test}
