@@ -20,7 +20,7 @@ function generateMarkdown(data) {
       arrayPerson += person;
     }
     credit = "## Credit";
-    credits = "* [Credits](#credit)\n";
+    credits = "\n* [Credits](#credit)";
     collaborate = `List of Collabarators\n`;
     collaborate = "".concat(collaborate, arrayPerson);
   }
@@ -53,14 +53,13 @@ function generateMarkdown(data) {
 
   return `
 # ${data.title}
-![License Badge](https://img.shields.io/badge/License-${license}-blue) ![Code Badge](https://img.shields.io/badge/JavaScript-100%-green)
+![License Badge](https://img.shields.io/badge/License-${license}-blue) ![Code Badge](https://img.shields.io/badge/JavaScript-100%25-green)
 ## Description
 ${data.description}
 ## Table of Contents
 * [Installation](#installation)
 * [Usage](#usage)
-* [Test](#test)
-${credits}
+* [Test](#test)${credits}
 * [License](#license)
 * [Questions](#questions)
 ## Installation
