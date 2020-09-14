@@ -31,6 +31,8 @@ Instructions to use the program are shown below
 
 ![Demo](./Develop/assets/images/demo.gif)
 
+To watch a [video](https://drive.google.com/file/d/1wP4G_7ijQrgAi70Cp9fhw06ycWsMfqSI/view) of the demo
+
 ## Test
 
 To run tests, run the following command:

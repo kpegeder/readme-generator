@@ -46,7 +46,7 @@ function generateMarkdown(data) {
       list += listUsage;
     }
     for (let i = 0; i < data.fileList.length; i++) {
-      let fileUsage = `![Demo](./Develop/assets/images/${data.fileList[i].file})\n`;
+      let fileUsage = `![Demo](./assets/images/${data.fileList[i].file})\n`;
       file += fileUsage;
     }
   }
