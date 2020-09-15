@@ -4,7 +4,10 @@ const generateMarkdown = require("./utils/generateMarkdown");
 
 // Make sure a response is made
 function verifyInput(name) {
-  return name !== "";
+  if (name === "") {
+    return "Please answer the question";
+  }
+  return true;
 }
 
 // array of questions for user
